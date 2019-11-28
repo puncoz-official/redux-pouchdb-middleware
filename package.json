@@ -1,0 +1,60 @@
+{
+  "name": "redux-pouchdb-middleware",
+  "version": "1.0.0",
+  "description": "A redux middleware to sync data between redux with pouchdb and vice-versa.",
+  "keywords": [
+    "redux",
+    "middleware",
+    "pouchdb",
+    "sync",
+    "offline"
+  ],
+  "author": "Puncoz Nepal <info@puncoz.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "jsnext:main": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=10",
+    "npm": ">=6"
+  },
+  "scripts": {
+    "test": "jest --detectOpenHandles --forceExit --runInBand --config jest.config.json",
+    "test:watch": "yarn test --watch",
+    "clean": "rimraf dist yarn-error.log*",
+    "lint": "tslint -c tslint.json --project tsconfig.json 'src/**/*.{ts}'",
+    "lint:fix": "yarn lint --fix",
+    "start": "rollup -c --watch",
+    "build": "yarn clean && rollup -c"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/puncoz/redux-pouchdb-middleware.git"
+  },
+  "bugs": {
+    "url": "https://github.com/puncoz/redux-pouchdb-middleware/issues"
+  },
+  "homepage": "https://github.com/puncoz/redux-pouchdb-middleware#readme",
+  "devDependencies": {
+    "@types/jest": "^24.0.23",
+    "husky": "^3.1.0",
+    "jest": "^24.9.0",
+    "lint-staged": "^9.4.3",
+    "rimraf": "^3.0.0",
+    "rollup": "^1.27.5",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-peer-deps-external": "^2.2.0",
+    "rollup-plugin-typescript": "^1.0.1",
+    "ts-jest": "^24.2.0",
+    "tslint": "^5.20.1",
+    "tslint-microsoft-contrib": "^6.2.0",
+    "typescript": "^3.7.2"
+  }
+}
