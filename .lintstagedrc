@@ -1,0 +1,6 @@
+{
+  "src/**/*.!{spec}.ts": [
+    "yarn lint:fix",
+    "git add"
+  ]
+}
