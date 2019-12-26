@@ -1,9 +1,12 @@
+import * as types from "./types"
+
 const initialState = {
     list: [
         {
             id: 1,
-            content: "Test todo",
-        }],
+            content: "Test",
+        },
+    ],
 }
 
 const generateId = () => Math.random()
@@ -20,22 +23,35 @@ const updateArrayById = (arr, id, content) => arr.map(data => {
 
 const deleteArrayById = (arr, id) => arr.filter(data => data.id !== id)
 
-const TodosReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case "ADD_TODO":
+const handleInitialLoad = (state, arrayOfData) => {
+    let tempState = { ...state }
+
+    arrayOfData.forEach(data => {
+        tempState = { ...tempState, list: data.list, _id: data._id, _rev: data._rev }
+    })
+
+    return tempState
+}
+
+const TodosReducer = (state = initialState, { type, payload }) => {
+    switch (type) {
+        case types.INITIAL_LOAD:
+            return handleInitialLoad(state, payload)
+
+        case types.ADD_TODO:
             return {
                 ...state, list: [
                     ...state.list, {
                         id: generateId(),
-                        content: action.todo,
+                        content: payload,
                     }],
             }
 
-        case "UPDATE_TODO":
-            return { ...state, list: updateArrayById(state.list, action.id, action.todo) }
+        case types.UPDATE_TODO:
+            return { ...state, list: updateArrayById(state.list, payload.id, payload.todo) }
 
-        case "DELETE_TODO":
-            return { ...state, list: deleteArrayById(state.list, action.id) }
+        case types.DELETE_TODO:
+            return { ...state, list: deleteArrayById(state.list, payload) }
 
         default:
             return state

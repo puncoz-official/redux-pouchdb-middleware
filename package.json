@@ -20,13 +20,23 @@
     "npm": ">=6"
   },
   "scripts": {
-    "test": "jest --detectOpenHandles --forceExit --runInBand --config jest.config.json",
+    "test": "jest --detectOpenHandles --forceExit --runInBand --config jest.config.json -u",
     "test:watch": "yarn test --watch",
+    "clean-modules": "rimraf node_modules",
     "clean": "rimraf dist yarn-error.log*",
-    "lint": "tslint -c tslint.json --project tsconfig.json 'src/**/*.{ts}'",
+    "lint": "tslint -c tslint.json --project tsconfig.json 'src/**/*'",
     "lint:fix": "yarn lint --fix",
-    "start": "rollup -c --watch",
-    "build": "yarn clean && rollup -c"
+    "webpack": "webpack --config ./webpack.config.js --progress",
+    "prebuild": "yarn clean && yarn lint --fix",
+    "build": "yarn webpack --env.NODE_ENV=production",
+    "start:example": "yarn --cwd ./example start",
+    "start:package": "yarn webpack --env.NODE_ENV=development --watch",
+    "start": "npm-run-all -p start:*",
+    "prepare": "yarn test",
+    "prepublishOnly": "yarn lint && yarn test",
+    "preversion": "yarn format && yarn lint",
+    "version": "git add .",
+    "postversion": "git push -u upstream && git push upstream -u --tags"
   },
   "husky": {
     "hooks": {
@@ -42,19 +52,28 @@
   },
   "homepage": "https://github.com/puncoz/redux-pouchdb-middleware#readme",
   "devDependencies": {
-    "@types/jest": "^24.0.23",
+    "@types/jest": "^24.0.24",
+    "@types/lodash": "^4.14.149",
+    "@types/pouchdb": "^6.4.0",
     "husky": "^3.1.0",
     "jest": "^24.9.0",
-    "lint-staged": "^9.4.3",
+    "lint-staged": "^9.5.0",
+    "lodash": "^4.17.15",
+    "npm-run-all": "^4.1.5",
+    "pouchdb": "^7.1.1",
+    "queueable-js": "^1.0.9",
     "rimraf": "^3.0.0",
-    "rollup": "^1.27.5",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-peer-deps-external": "^2.2.0",
-    "rollup-plugin-typescript": "^1.0.1",
     "ts-jest": "^24.2.0",
+    "ts-loader": "^6.2.1",
     "tslint": "^5.20.1",
     "tslint-microsoft-contrib": "^6.2.0",
-    "typescript": "^3.7.2"
-  }
+    "typescript": "^3.7.4",
+    "webpack": "^4.41.4",
+    "webpack-cli": "^3.3.10"
+  },
+  "peerDependencies": {
+    "lodash": "^4.17.15",
+    "pouchdb": "^7.1.1"
+  },
+  "dependencies": {}
 }

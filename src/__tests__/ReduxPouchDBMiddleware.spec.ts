@@ -1,7 +1,3 @@
-beforeAll(() => {
-
-})
-
 describe("ReduxPouchDBMiddleware", () => {
     it("save store data to pouchdb", () => {
         const test = 1
