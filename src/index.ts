@@ -1,2 +1,1 @@
-let a = 10
-console.log(`hello world ${a}`)
+export { default as ReduxPouchDBMiddleware } from "./Middleware"
