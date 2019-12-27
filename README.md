@@ -6,6 +6,8 @@
 
 A redux middleware to sync data between redux with pouchdb and vice-versa.
 
+Inspired and forked from [pouch-redux-middleware](https://github.com/yldio/pouch-redux-middleware)
+
 ## How it works?
 - This package is a middleware for [Redux](https://redux.js.org/advanced/middleware#middleware).
 - It persists the state of chosen reducer of the Redux into [PouchDB](http://pouchdb.com/) every time store get updated.
