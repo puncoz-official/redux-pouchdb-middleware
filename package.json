@@ -1,6 +1,6 @@
 {
   "name": "redux-pouchdb-middleware",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A redux middleware to sync data between redux with pouchdb and vice-versa.",
   "keywords": [
     "redux",
@@ -12,9 +12,10 @@
   "author": "Puncoz Nepal <info@puncoz.com>",
   "license": "MIT",
   "main": "dist/index.js",
-  "module": "dist/index.es.js",
-  "jsnext:main": "dist/index.es.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "engines": {
     "node": ">=10",
     "npm": ">=6"
@@ -27,14 +28,14 @@
     "lint": "tslint -c tslint.json --project tsconfig.json 'src/**/*'",
     "lint:fix": "yarn lint --fix",
     "webpack": "webpack --config ./webpack.config.js --progress",
-    "prebuild": "yarn clean && yarn lint --fix",
+    "prebuild": "yarn clean && yarn lint --fix && yarn test",
     "build": "yarn webpack --env.NODE_ENV=production",
     "start:example": "yarn --cwd ./example start",
     "start:package": "yarn webpack --env.NODE_ENV=development --watch",
     "start": "npm-run-all -p start:*",
     "prepare": "yarn test",
     "prepublishOnly": "yarn lint && yarn test",
-    "preversion": "yarn format && yarn lint",
+    "preversion": "yarn lint",
     "version": "git add .",
     "postversion": "git push -u upstream && git push upstream -u --tags"
   },
@@ -45,12 +46,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/puncoz/redux-pouchdb-middleware.git"
+    "url": "git+https://github.com/puncoz-official/redux-pouchdb-middleware.git"
   },
   "bugs": {
-    "url": "https://github.com/puncoz/redux-pouchdb-middleware/issues"
+    "url": "https://github.com/puncoz-official/redux-pouchdb-middleware/issues"
   },
-  "homepage": "https://github.com/puncoz/redux-pouchdb-middleware#readme",
+  "homepage": "https://github.com/puncoz-official/redux-pouchdb-middleware#readme",
   "devDependencies": {
     "@types/jest": "^24.0.24",
     "@types/lodash": "^4.14.149",

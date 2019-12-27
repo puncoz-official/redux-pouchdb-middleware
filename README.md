@@ -1,4 +1,9 @@
 # redux-pouchdb-middleware
+
+[![Version](https://img.shields.io/npm/v/redux-pouchdb-middleware?logo=npm)](https://www.npmjs.com/package/redux-pouchdb-middleware)
+[![Build](https://img.shields.io/travis/puncoz-official/redux-pouchdb-middleware?logo=travis)](https://travis-ci.org/puncoz-official/redux-pouchdb-middleware)
+[![Twitter Follow](https://img.shields.io/twitter/follow/PuncozNepal?label=Follow&style=social)](https://twitter.com/PuncozNepal)
+
 A redux middleware to sync data between redux with pouchdb and vice-versa.
 
 ## How it works?
