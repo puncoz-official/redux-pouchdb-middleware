@@ -43,7 +43,7 @@ const Todos = () => {
     return (
         <div className="todos">
             <div>
-                <h1>e-sifarish - Redux/PouchDB Sync</h1>
+                <h1>Redux/PouchDB Sync</h1>
                 <button onClick={() => setShowAddForm(true)}>Add</button>
             </div>
 

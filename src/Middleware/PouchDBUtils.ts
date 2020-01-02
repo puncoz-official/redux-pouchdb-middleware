@@ -24,6 +24,7 @@ class PouchDBUtils implements PouchDBInterface {
     public listen(reduxState: ReduxStatesInterface, dispatch: any, initialBatchDispatched: (error: any) => void) {
         this.db.allDocs({include_docs: true}).then((rawAllDocs: any) => {
             const docs = rawAllDocs.rows.map((doc: any) => doc.doc)
+            console.log(docs)
             reduxState.propagateInitialInsert(docs, dispatch)
 
             const changes = this.db.changes({
@@ -38,39 +39,38 @@ class PouchDBUtils implements PouchDBInterface {
         }).catch((error: any) => initialBatchDispatched(error))
     }
 
-    public scheduleSave(doc: any, verbose: boolean): void {
+    public asyncSave(doc: any, verbose: boolean, reducer: string): void {
         log(verbose, "scheduleSave", doc)
 
-        if (doc.hasOwnProperty("_rev")) {
-            this.queue.push(this.update(doc, verbose))
-            return
+        if (!doc.hasOwnProperty("_id")) {
+            doc._id = `${reducer}_id`
         }
 
-        this.queue.push(this.create(doc, verbose))
+        this.queue.push(this.update(doc, verbose))
     }
 
-    private create(data: any, verbose: boolean): (done: any) => void {
-        log(verbose, "create", data)
-
-        return async (done: any) => {
-            let error: any
-            let response: any
-
-            try {
-                response = await this.db.post(data)
-            } catch (err) {
-                error = err
-            }
-
-            log(verbose, "Created", {
-                doc: data,
-                response,
-                type: "create",
-            })
-
-            done(error, response)
-        }
-    }
+    // private create(data: any, verbose: boolean): (done: any) => void {
+    //     log(verbose, "create", data)
+    //
+    //     return async (done: any) => {
+    //         let error: any
+    //         let response: any
+    //
+    //         try {
+    //             response = await this.db.post(data)
+    //         } catch (err) {
+    //             error = err
+    //         }
+    //
+    //         log(verbose, "Created", {
+    //             doc: data,
+    //             response,
+    //             type: "create",
+    //         })
+    //
+    //         done(error, response)
+    //     }
+    // }
 
     private update(data: any, verbose: boolean): (done: any) => void {
         log(verbose, "update", data)
@@ -81,11 +81,13 @@ class PouchDBUtils implements PouchDBInterface {
 
             try {
                 const doc = await this.db.get(data._id)
+
                 response = await this.db.put({
                     ...data, _id: data._id, _rev: doc._rev,
                 })
             } catch (err) {
                 error = err
+                response = await this.db.post(data)
             }
 
             log(verbose, "Updated", {
