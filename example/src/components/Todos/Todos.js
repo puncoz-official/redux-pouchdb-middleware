@@ -1,18 +1,20 @@
 import React, {
     Fragment,
     useCallback,
+    useEffect,
     useState,
-}               from "react"
+}                      from "react"
 import {
     useDispatch,
     useSelector,
-}               from "react-redux"
+}                      from "react-redux"
+import { setDateTime } from "../../store/reducers/system/actions"
 import {
     addTodo,
     deleteTodo,
     updateTodo,
-}               from "../../store/reducers/actions"
-import TodoForm from "./TodoForm"
+}                      from "../../store/reducers/todos/actions"
+import TodoForm        from "./TodoForm"
 import "./Todos.scss"
 
 const Todos = () => {
@@ -20,7 +22,16 @@ const Todos = () => {
     const [editMode, setEditMode] = useState(null)
     const todoList = useSelector(state => state.todos.list)
     const _id = useSelector(state => state.todos._id)
+    const datetime = useSelector(state => state.system.datetime)
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        setInterval(() => {
+            const date = new Date()
+
+            dispatch(setDateTime(`${date.toDateString()}, ${date.toLocaleTimeString()}`))
+        }, 1000)
+    }, [])
 
     const handleAdd = useCallback((todo) => {
         dispatch(addTodo(todo))
@@ -47,6 +58,7 @@ const Todos = () => {
                 <button onClick={() => setShowAddForm(true)}>Add</button>
             </div>
 
+            <p>Date Time: {datetime}</p>
             <p>Id: {_id}</p>
 
             {showAddForm && <TodoForm onSave={handleAdd}/>}

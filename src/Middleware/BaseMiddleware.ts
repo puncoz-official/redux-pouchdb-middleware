@@ -22,6 +22,7 @@ abstract class BaseMiddleware {
             return new ReduxStates({
                 actions: {...option.actions},
                 database: this.initDB(option),
+                excludeKeys: option.excludeKeys || [],
                 reducer: option.reducer,
                 verbose: option.verbose,
             })

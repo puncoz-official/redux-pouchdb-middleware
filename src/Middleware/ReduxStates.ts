@@ -5,6 +5,7 @@ import {
     ReduxStatesInterface,
 }                               from "./types"
 import {
+    compareObjects,
     log,
     MiddlewareException,
 }                               from "./utils"
@@ -13,6 +14,8 @@ class ReduxStates implements ReduxStatesInterface {
     public reducer: string = ""
     public database: PouchDBUtils
     public verbose: boolean = false
+    public doc: any = {}
+    public excludeKeys: string[] = []
     public actions: Actions = {
         initialInsert: this.defaultAction("initialInsert"),
     }
@@ -26,6 +29,7 @@ class ReduxStates implements ReduxStatesInterface {
 
         this.database = options.database
         this.verbose = options.verbose || false
+        this.excludeKeys = options.excludeKeys || []
         this.actions = {...this.actions, ...options.actions}
     }
 
@@ -36,10 +40,15 @@ class ReduxStates implements ReduxStatesInterface {
     }
 
     public processNewState(newState: object): void {
-        log(this.verbose, "processNewState", newState)
         const doc = getFromObject(newState, this.reducer)
+        this.excludeKeys.forEach((key: string) => {
+            delete doc[key]
+        })
 
-        if (doc) {
+        log(this.verbose, "processNewState", newState, this.reducer, doc, this.doc)
+
+        if (!compareObjects(doc, this.doc)) {
+            this.doc = doc
             this.database.asyncSave(doc, this.verbose, this.reducer)
         }
     }

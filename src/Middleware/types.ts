@@ -14,6 +14,8 @@ export interface ReduxStatesInterface {
     database: PouchDBUtils
     actions: Actions
     verbose: boolean
+    doc: any
+    excludeKeys?: string[]
 
     propagateInitialInsert: (doc: any, dispatch: any) => void
     processNewState: (newState: object) => void
