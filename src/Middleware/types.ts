@@ -22,7 +22,7 @@ export interface ReduxStatesInterface {
 export interface PouchDBInterface {
     db: typeof PouchDB
     listen: (reducer: ReduxStatesInterface, dispatch: any, initialBatchDispatched: (error: any) => void) => void
-    scheduleSave: (docs: any, withLog: boolean) => void
+    asyncSave: (docs: any, withLog: boolean, reducer: string) => void
 }
 
 export interface MiddlewareProps extends Partial<ReduxStatesInterface> {

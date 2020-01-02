@@ -40,7 +40,7 @@ class ReduxStates implements ReduxStatesInterface {
         const doc = getFromObject(newState, this.reducer)
 
         if (doc) {
-            this.database.scheduleSave(doc, this.verbose)
+            this.database.asyncSave(doc, this.verbose, this.reducer)
         }
     }
 
