@@ -14,6 +14,9 @@ export interface ReduxStatesInterface {
     database: PouchDBUtils
     actions: Actions
     verbose: boolean
+    doc: any
+    excludeKeys?: string[]
+    includeKeys?: string[]
 
     propagateInitialInsert: (doc: any, dispatch: any) => void
     processNewState: (newState: object) => void
@@ -22,7 +25,7 @@ export interface ReduxStatesInterface {
 export interface PouchDBInterface {
     db: typeof PouchDB
     listen: (reducer: ReduxStatesInterface, dispatch: any, initialBatchDispatched: (error: any) => void) => void
-    asyncSave: (docs: any, withLog: boolean, reducer: string) => void
+    asyncSave: (docs: any, withLog: boolean) => void
 }
 
 export interface MiddlewareProps extends Partial<ReduxStatesInterface> {

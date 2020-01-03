@@ -23,14 +23,8 @@ const updateArrayById = (arr, id, content) => arr.map(data => {
 
 const deleteArrayById = (arr, id) => arr.filter(data => data.id !== id)
 
-const handleInitialLoad = (state, arrayOfData) => {
-    let tempState = { ...state }
-
-    arrayOfData.forEach(data => {
-        tempState = { ...tempState, list: data.list, _id: data._id, _rev: data._rev }
-    })
-
-    return tempState
+const handleInitialLoad = (state, data) => {
+    return { ...state, list: data.list, _id: data._id, _rev: data._rev }
 }
 
 const TodosReducer = (state = initialState, { type, payload }) => {

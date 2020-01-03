@@ -55,6 +55,7 @@ middleware.push(ReduxPouchDBMiddleware({
     actions: {
         initialInsert: todos => initialLoad(todos),
     },
+    excludeKeys: ["id"]
 }))
 
 const composedEnhancers = compose(applyMiddleware(...middleware), ...enhancers)
@@ -74,6 +75,8 @@ export default createStore(reducers, initialStore, composedEnhancers)
 - `verbose`: boolean|optional(default = false). Weather to print logs in console or not.
 - `actions`:  an object describing the actions to perform when initially inserting items and when a change occurs in the db.
 - `actions.initialInsert`: redux action to store data from pouchDB to store on app load.
+- `actions.includeKeys`: string[]|optional. An array of string of keys to include to save in pouchdb for this specific redux reducers. If not provided, all keys will be saved except provided in `excludeKeys` key.
+- `actions.excludeKeys`: string[]|optional. An array of string of keys to exclude saving in pouchdb for this specific redux reducers.
 
 ## License
 
