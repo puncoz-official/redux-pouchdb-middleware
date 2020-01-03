@@ -7,14 +7,8 @@ const initialState = {
     datetime: "",
 }
 
-const handleInitialLoad = (state, arrayOfData) => {
-    let tempState = { ...state }
-
-    arrayOfData.forEach(data => {
-        tempState = { ...tempState, list: data.list, _id: data._id, _rev: data._rev }
-    })
-
-    return tempState
+const handleInitialLoad = (state, data) => {
+    return { ...state, list: data.list, _id: data._id, _rev: data._rev }
 }
 
 const SystemReducer = (state = initialState, { type, payload }) => {

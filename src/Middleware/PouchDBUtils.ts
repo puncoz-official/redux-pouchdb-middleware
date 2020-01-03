@@ -24,8 +24,8 @@ class PouchDBUtils implements PouchDBInterface {
     public listen(reduxState: ReduxStatesInterface, dispatch: any, initialBatchDispatched: (error: any) => void) {
         this.db.allDocs({include_docs: true}).then((rawAllDocs: any) => {
             const docs = rawAllDocs.rows.map((doc: any) => doc.doc)
-            console.log(docs)
-            reduxState.propagateInitialInsert(docs, dispatch)
+
+            reduxState.propagateInitialInsert(docs[0] || null, dispatch)
 
             const changes = this.db.changes({
                 include_docs: true,
@@ -39,12 +39,8 @@ class PouchDBUtils implements PouchDBInterface {
         }).catch((error: any) => initialBatchDispatched(error))
     }
 
-    public asyncSave(doc: any, verbose: boolean, reducer: string): void {
+    public asyncSave(doc: any, verbose: boolean): void {
         log(verbose, "scheduleSave", doc)
-
-        if (!doc.hasOwnProperty("_id")) {
-            doc._id = `${reducer}_id`
-        }
 
         this.queue.push(this.update(doc, verbose))
     }

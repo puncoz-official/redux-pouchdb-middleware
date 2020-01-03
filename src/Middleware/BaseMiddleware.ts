@@ -23,6 +23,7 @@ abstract class BaseMiddleware {
                 actions: {...option.actions},
                 database: this.initDB(option),
                 excludeKeys: option.excludeKeys || [],
+                includeKeys: option.includeKeys || [],
                 reducer: option.reducer,
                 verbose: option.verbose,
             })

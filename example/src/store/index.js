@@ -25,6 +25,7 @@ middleware.push(ReduxPouchDBMiddleware([
         actions: {
             initialInsert: todos => initialLoad(todos),
         },
+        includeKeys: ["list"],
     },
     {
         reducer: "system",
