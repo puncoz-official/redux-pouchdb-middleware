@@ -35,7 +35,7 @@
     "start": "npm-run-all -p start:*",
     "prepare": "yarn test",
     "prepublishOnly": "yarn lint && yarn test",
-    "preversion": "yarn lint",
+    "preversion": "yarn build",
     "version": "git add .",
     "postversion": "git push -u upstream && git push upstream -u --tags"
   },
