@@ -1,6 +1,6 @@
 {
   "name": "redux-pouchdb-middleware",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A redux middleware to sync data between redux with pouchdb and vice-versa.",
   "keywords": [
     "redux",
