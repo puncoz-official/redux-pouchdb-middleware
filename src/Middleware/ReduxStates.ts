@@ -38,10 +38,8 @@ class ReduxStates implements ReduxStatesInterface {
     public propagateInitialInsert(doc: any, dispatch: any) {
         log(this.verbose, "propagateInitialInsert", doc)
 
-        if (doc) {
-            this.doc = doc
-            dispatch(this.actions.initialInsert(doc))
-        }
+        this.doc = doc
+        dispatch(this.actions.initialInsert(doc))
     }
 
     public processNewState(newState: object): void {
