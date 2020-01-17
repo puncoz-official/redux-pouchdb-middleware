@@ -6,6 +6,8 @@ export const updateTodo = createAction(types.UPDATE_TODO)
 export const deleteTodo = createAction(types.DELETE_TODO)
 export const initialLoad = createAction(types.INITIAL_LOAD)
 
+export const updateNestedData = createAction(types.UPDATE_NESTED_DATA)
+
 export const log = (...contents) => ({
     type: types.LOG,
     payload: contents,

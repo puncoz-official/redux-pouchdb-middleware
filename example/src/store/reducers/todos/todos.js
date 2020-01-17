@@ -7,6 +7,10 @@ const initialState = {
             content: "Test",
         },
     ],
+    nestedData: {
+        en: {},
+        ne: {},
+    },
 }
 
 const generateId = () => Math.random()
@@ -24,13 +28,16 @@ const updateArrayById = (arr, id, content) => arr.map(data => {
 const deleteArrayById = (arr, id) => arr.filter(data => data.id !== id)
 
 const handleInitialLoad = (state, data) => {
-    return { ...state, list: data.list, _id: data._id, _rev: data._rev }
+    return { ...state, ...data }
 }
 
 const TodosReducer = (state = initialState, { type, payload }) => {
     switch (type) {
         case types.INITIAL_LOAD:
             return handleInitialLoad(state, payload)
+
+        case types.UPDATE_NESTED_DATA:
+            return { ...state, nestedData: payload }
 
         case types.ADD_TODO:
             return {
