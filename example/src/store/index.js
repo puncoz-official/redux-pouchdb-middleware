@@ -20,16 +20,16 @@ middleware.push(LogMiddleware)
 middleware.push(ReduxPouchDBMiddleware([
     {
         reducer: "todos",
-        verbose: true,
+        verbose: false,
         db: (new DatabaseService("todos-store")).instance(),
         actions: {
             initialInsert: todos => initialLoad(todos),
         },
-        includeKeys: ["list"],
+        includeKeys: ["list", "nestedData"],
     },
     {
         reducer: "system",
-        verbose: true,
+        verbose: false,
         db: (new DatabaseService("system-store")).instance(),
         actions: {
             initialInsert: system => initialSystemLoad(system),

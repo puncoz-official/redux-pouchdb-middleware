@@ -42,52 +42,30 @@ class PouchDBUtils implements PouchDBInterface {
     public asyncSave(doc: any, verbose: boolean): void {
         log(verbose, "scheduleSave", doc)
 
-        this.queue.push(this.update(doc, verbose))
+        this.queue.push(this.save(doc, verbose))
     }
 
-    // private create(data: any, verbose: boolean): (done: any) => void {
-    //     log(verbose, "create", data)
-    //
-    //     return async (done: any) => {
-    //         let error: any
-    //         let response: any
-    //
-    //         try {
-    //             response = await this.db.post(data)
-    //         } catch (err) {
-    //             error = err
-    //         }
-    //
-    //         log(verbose, "Created", {
-    //             doc: data,
-    //             response,
-    //             type: "create",
-    //         })
-    //
-    //         done(error, response)
-    //     }
-    // }
-
-    private update(data: any, verbose: boolean): (done: any) => void {
+    private save(data: any, verbose: boolean): (done: any) => void {
         log(verbose, "update", data)
+        const dataToUpdate = {...data}
 
         return async (done: any) => {
             let error: any
             let response: any
 
             try {
-                const doc = await this.db.get(data._id)
+                const doc = await this.db.get(dataToUpdate._id)
 
                 response = await this.db.put({
-                    ...data, _id: data._id, _rev: doc._rev,
+                    ...dataToUpdate, _id: dataToUpdate._id, _rev: doc._rev,
                 })
             } catch (err) {
                 error = err
-                response = await this.db.post(data)
+                response = await this.db.post({...dataToUpdate, _id: dataToUpdate._id})
             }
 
             log(verbose, "Updated", {
-                doc: data,
+                doc: dataToUpdate,
                 response,
                 type: "update",
             })

@@ -12,6 +12,7 @@ import { setDateTime } from "../../store/reducers/system/actions"
 import {
     addTodo,
     deleteTodo,
+    updateNestedData,
     updateTodo,
 }                      from "../../store/reducers/todos/actions"
 import TodoForm        from "./TodoForm"
@@ -23,6 +24,7 @@ const Todos = () => {
     const todoList = useSelector(state => state.todos.list)
     const _id = useSelector(state => state.todos._id)
     const datetime = useSelector(state => state.system.datetime)
+    const nestedData = useSelector(state => state.todos.nestedData)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -37,6 +39,28 @@ const Todos = () => {
         dispatch(addTodo(todo))
 
         setShowAddForm(false)
+        dispatch(updateNestedData({
+            en: {
+                parent1: {
+                    key1: "en.parent1.key1",
+                    key2: "en.parent1.key2",
+                },
+                parent2: {
+                    key1: "en.parent2.key1",
+                    key2: "en.parent2.key2",
+                },
+            },
+            ne: {
+                parent1: {
+                    key1: "ne.parent1.key1",
+                    key2: "ne.parent1.key2",
+                },
+                parent2: {
+                    key1: "ne.parent2.key1",
+                    key2: "ne.parent2.key2",
+                },
+            },
+        }))
     }, [dispatch])
 
     const handleUpdate = useCallback((todo, id) => {
@@ -60,6 +84,7 @@ const Todos = () => {
 
             <p>Date Time: {datetime}</p>
             <p>Id: {_id}</p>
+            <p>{JSON.stringify(nestedData)}</p>
 
             {showAddForm && <TodoForm onSave={handleAdd}/>}
 
