@@ -3,19 +3,19 @@ import React, {
     useCallback,
     useEffect,
     useState,
-}                      from "react"
+} from "react"
 import {
     useDispatch,
     useSelector,
-}                      from "react-redux"
+} from "react-redux"
 import { setDateTime } from "../../store/reducers/system/actions"
 import {
     addTodo,
     deleteTodo,
     updateNestedData,
     updateTodo,
-}                      from "../../store/reducers/todos/actions"
-import TodoForm        from "./TodoForm"
+} from "../../store/reducers/todos/actions"
+import TodoForm from "./TodoForm"
 import "./Todos.scss"
 
 const Todos = () => {
@@ -78,15 +78,18 @@ const Todos = () => {
     return (
         <div className="todos">
             <div>
-                <h1>Redux/PouchDB Sync</h1>
-                <button onClick={() => setShowAddForm(true)}>Add</button>
+                <h1>Offline Browsing with data save in Redux/PouchDB with Sync</h1>
             </div>
 
-            <p>Date Time: {datetime}</p>
+            <p><strong>Date Time (Saved in pouchdb)</strong>: {datetime}</p>
             <p>Id: {_id}</p>
-            <p>{JSON.stringify(nestedData)}</p>
+            <p><strong>Test Neste Data:</strong> {JSON.stringify(nestedData)}</p>
 
-            {showAddForm && <TodoForm onSave={handleAdd}/>}
+            <hr />
+
+            <h2>Todo</h2>
+            <button onClick={() => setShowAddForm(true)}>Add New ToDo</button>
+            {showAddForm && <TodoForm onSave={handleAdd} />}
 
             <ul>
                 {todoList && todoList.map(todo => (
@@ -98,8 +101,8 @@ const Todos = () => {
                                 <span className="action" onClick={() => handleDelete(todo.id)}> Delete </span>
                             </Fragment>
                         ) : (
-                            <TodoForm onSave={(updatedTodo) => handleUpdate(updatedTodo, todo.id)} value={todo.content}/>
-                        )}
+                                <TodoForm onSave={(updatedTodo) => handleUpdate(updatedTodo, todo.id)} value={todo.content} />
+                            )}
 
                     </li>
                 ))}
